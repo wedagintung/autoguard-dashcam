@@ -6,147 +6,762 @@
     <title>AutoGuard 4K | Saksi Mata Digital Mobil Anda</title>
     <meta name="description" content="Dashcam mobil resolusi 4K dengan Night Vision. Rekam bukti kecelakaan dan anti-modus di jalan. Pasang mudah, koneksi WiFi ke HP.">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Rajdhani (Tech) & Roboto (Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-red: #D32F2F;
+            --primary-red: #D32F2F; /* Recording Red */
             --tech-blue: #2196F3;
             --dark-bg: #0F172A;
             --card-bg: #1E293B;
             --text-white: #F1F5F9;
             --text-grey: #94A3B8;
             --accent-yellow: #FFC107;
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
 
         body {
-            background: var(--dark-bg);
-            color: var(--text-white);
             font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        h1,h2,h3,h4 {
-            font-family:'Rajdhani',sans-serif;
-            text-transform:uppercase;
+        h1, h2, h3, h4 {
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            line-height: 1.2;
+            letter-spacing: 1px;
         }
 
         .container {
-            max-width:1100px;
-            margin:auto;
-            padding:0 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* FIXED SPACING REQUEST */
-        .section-offer .mb-space {
-            margin-bottom: 40px !important;
+        .text-center { text-align: center; }
+        .font-bold { font-weight: 700; }
+        .text-red { color: var(--primary-red); text-shadow: 0 0 10px rgba(211, 47, 47, 0.5); }
+        .text-blue { color: var(--tech-blue); }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
 
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pulse-red {
+            animation: pulse 1.5s infinite;
+        }
+
+        /* --- TOP BAR --- */
+        .alert-bar {
+            background: var(--primary-red);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .timer-box {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin: 0 3px;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        /* --- HERO SECTION --- */
         header {
-            padding:80px 0 120px;
-            background:linear-gradient(180deg,rgba(15,23,42,0.8),var(--dark-bg)), 
-            url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2000&auto=format&fit=crop');
-            background-size:cover;
-            background-position:center;
+            padding: 80px 0 120px 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), var(--dark-bg)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero-content { text-align:center; max-width:800px; margin:auto; }
+        .rec-indicator {
+            position: absolute;
+            top: 80px;
+            left: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-red);
+            font-weight: bold;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+        }
 
+        .rec-dot {
+            width: 15px;
+            height: 15px;
+            background: var(--primary-red);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .badge-hero {
+            border: 1px solid var(--tech-blue);
+            color: var(--tech-blue);
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+            background: rgba(33, 150, 243, 0.1);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: var(--text-grey);
+            margin-bottom: 40px;
+        }
+
+        .hero-img {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 30px;
+            filter: drop-shadow(0 0 30px rgba(33, 150, 243, 0.2));
+            animation: float 4s infinite ease-in-out;
+        }
+
+        /* --- BUTTONS --- */
         .btn {
-            display:inline-block;
-            padding:15px 35px;
-            border-radius:6px;
-            cursor:pointer;
-            font-weight:bold;
-            text-transform:uppercase;
-            text-decoration:none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 40px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-primary { background:var(--primary-red); color:white; }
-        .btn-outline { border:2px solid white; color:white; }
+        .btn-primary {
+            background: var(--primary-red);
+            color: white;
+            box-shadow: 0 0 20px rgba(211, 47, 47, 0.4);
+        }
 
+        .btn-primary:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--text-white);
+            color: var(--text-white);
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--tech-blue);
+            color: var(--tech-blue);
+        }
+
+        /* --- TRUST STRIP --- */
+        .trust-strip {
+            background: var(--card-bg);
+            padding: 25px 0;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            position: relative;
+            z-index: 2;
+        }
+
+        .trust-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-grey);
+        }
+
+        .trust-item i { color: var(--tech-blue); margin-right: 8px; font-size: 1.2rem; }
+
+        /* --- PAIN POINTS (FEAR) --- */
+        .section-pain {
+            padding: 80px 0;
+            background: var(--dark-bg);
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pain-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .pain-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+        }
+
+        .pain-icon { font-size: 2.5rem; color: var(--primary-red); margin-bottom: 15px; }
+
+        /* --- EVIDENCE DEMO (NIGHT VISION) --- */
+        .section-demo {
+            padding: 80px 0;
+            background: black;
+            text-align: center;
+        }
+
+        .video-compare {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .video-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-box img {
+            width: 100%;
+            display: block;
+            opacity: 0.8;
+        }
+
+        .video-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        /* --- FEATURES --- */
+        .section-features {
+            padding: 80px 0;
+            background: var(--card-bg);
+        }
+
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .feature-row:nth-child(even) { flex-direction: row-reverse; }
+
+        .feature-icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid var(--tech-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--tech-blue);
+            margin-bottom: 15px;
+        }
+
+        .feature-img img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border: 1px solid #444;
+        }
+
+        /* --- OFFER & BUNDLING --- */
         .section-offer {
-            padding:80px 0;
-            text-align:center;
-            background:linear-gradient(45deg,#0f172a,#1e293b);
+            padding: 80px 0;
+            background: linear-gradient(45deg, #0f172a, #1e293b);
+            text-align: center;
+            border-top: 2px solid var(--tech-blue);
         }
 
         .offer-card {
-            border:2px solid var(--tech-blue);
-            border-radius:20px;
-            padding:50px;
-            max-width:700px;
-            margin:auto;
-            background:rgba(255,255,255,0.05);
-            backdrop-filter:blur(10px);
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--tech-blue);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 50px rgba(33, 150, 243, 0.2);
         }
 
-        .bundle-list { list-style:none; text-align:left; max-width:450px; margin:20px auto; }
-        .bundle-list li { padding:10px 0; border-bottom:1px dashed #444; display:flex; gap:10px; align-items:center; }
+        .ribbon {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-yellow);
+            color: black;
+            padding: 8px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
 
+        .price-strike { text-decoration: line-through; color: var(--text-grey); font-size: 1.2rem; }
+        .price-final { font-size: 3.5rem; font-weight: 800; color: white; margin: 10px 0; font-family: 'Rajdhani', sans-serif; }
+
+        .stock-bar {
+            background: #333;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 400px;
+            overflow: hidden;
+        }
+
+        .stock-fill {
+            background: var(--primary-red);
+            width: 85%;
+            height: 100%;
+            animation: drain 2s ease-out;
+        }
+
+        .bundle-list {
+            text-align: left;
+            margin: 30px auto;
+            max-width: 500px;
+            list-style: none;
+        }
+
+        .bundle-list li {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- LOGOS --- */
+        .logo-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .logo-badge {
+            background: white;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        /* --- FAQ --- */
+        .section-faq {
+            padding: 60px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .accordion {
+            background-color: var(--card-bg);
+            color: var(--text-white);
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: 0.4s;
+            border-bottom: 1px solid #333;
+            margin-bottom: 5px;
+        }
+
+        .active, .accordion:hover {
+            background-color: #2C3A47;
+            color: var(--tech-blue);
+        }
+
+        .panel {
+            padding: 0 20px;
+            background-color: var(--card-bg);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            color: var(--text-grey);
+        }
+
+        /* --- STICKY NAV --- */
         .sticky-footer {
-            position:fixed;
-            bottom:0;
-            left:0;
-            width:100%;
-            background:rgba(15,23,42,0.95);
-            padding:15px;
-            text-align:center;
-            border-top:1px solid var(--tech-blue);
-            backdrop-filter:blur(10px);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 15px;
+            border-top: 1px solid var(--tech-blue);
+            display: flex;
+            justify-content: center;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes drain { from { width: 0; } to { width: 85%; } }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 3rem; }
+            .hero-content { padding: 0 10px; }
+            .feature-row { flex-direction: column-reverse !important; text-align: center; }
+            .feature-icon-box { margin: 0 auto 15px auto; }
+            .btn { width: 100%; text-align: center; }
+            .sticky-footer .btn { width: 100%; }
         }
     </style>
 </head>
-
 <body>
 
-    <header>
-        <div class="container">
-            <div class="hero-content">
-                <h1>Jangan Biarkan Tabrak Lari <br><span style="color:#D32F2F;">Tanpa Bukti Video!</span></h1>
-                <p>Kamera mobil 4K dengan sensor Sony Starvis.</p>
+    <!-- SCARCITY TOP -->
+    <div class="alert-bar">
+        🚨 GRATIS MEMORY CARD 64GB KHUSUS PEMBELIAN HARI INI! SISA WAKTU: 
+        <span class="timer-box" id="h">06</span> : 
+        <span class="timer-box" id="m">00</span> : 
+        <span class="timer-box" id="s">00</span>
+    </div>
 
-                <a href="#" class="btn btn-primary">AMBIL PROMO</a>
-                <a href="#" class="btn btn-outline">Lihat Video</a>
+    <!-- HERO SECTION -->
+    <header>
+        <div class="rec-indicator">
+            <div class="rec-dot pulse-red"></div> REC 00:00:01
+        </div>
+        <div class="container">
+            <div class="hero-content reveal active">
+                <div class="badge-hero">🎥 4K ULTRA HD DASHCAM</div>
+                <h1>Jangan Biarkan Tabrak Lari <br><span class="text-red">Tanpa Bukti Video!</span></h1>
+                <p class="hero-sub">
+                    <strong>AutoGuard 4K.</strong> Kamera mobil pintar dengan sensor Sony Starvis. 
+                    Rekam plat nomor jelas siang & malam. Bukti kuat lawan "Pungli" dan Modus Kejahatan di jalan.
+                </p>
+                
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <button onclick="redirectToWA('Halo Gan, mau tanya Dashcam')" class="btn btn-primary">
+                        AMBIL PROMO LENGKAP <i class="fas fa-video" style="margin-left: 8px;"></i>
+                    </button>
+                    <button onclick="document.getElementById('demo').scrollIntoView()" class="btn btn-outline">
+                        Lihat Hasil Video
+                    </button>
+                </div>
+
+                <img src="https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?q=80&w=1974&auto=format&fit=crop" alt="Dashcam Unit" class="hero-img">
             </div>
         </div>
     </header>
 
-    <!-- OFFER FIXED SPACING -->
-    <section class="section-offer">
+    <!-- TRUST STRIP -->
+    <div class="trust-strip reveal">
         <div class="container">
-            <h2>PAKET LENGKAP "SIAP REKAM"</h2>
-            <p class="text-grey mb-space">Gak perlu beli alat tambahan lagi. Tinggal colok, langsung aktif.</p>
+            <div class="trust-grid">
+                <div><i class="fas fa-eye"></i> SONY STARVIS LENS</div>
+                <div><i class="fas fa-wifi"></i> WIFI CONNECTION</div>
+                <div><i class="fas fa-car-crash"></i> G-SENSOR LOCK</div>
+                <div><i class="fas fa-clock"></i> 24H PARKING MODE</div>
+            </div>
+        </div>
+    </div>
 
-            <div class="offer-card">
-                <h3 style="color:#2196F3;">AUTOGUARD 4K BUNDLE</h3>
-
-                <p class="text-grey">Kamera Depan + Kamera Belakang + Memory 64GB</p>
-
-                <div style="margin:20px 0;">
-                    <span style="text-decoration:line-through; color:#94A3B8;">Rp 1.850.000</span><br>
-                    <span style="font-size:3rem; font-weight:800;">Rp 899.000</span>
+    <!-- PAIN POINTS -->
+    <section class="section-pain">
+        <div class="container">
+            <h2 class="text-center reveal">Jalanan Itu Kejam, Bos! ⚠️</h2>
+            <div class="pain-grid reveal">
+                <div class="pain-card">
+                    <div class="pain-icon"><i class="fas fa-angry"></i></div>
+                    <h4>Modus Pura-Pura Tertabrak</h4>
+                    <p class="text-grey">Banyak oknum sengaja menabrakkan diri ke mobil untuk minta ganti rugi. Tanpa bukti video, Anda pasti kalah argumen.</p>
                 </div>
-
-                <ul class="bundle-list">
-                    <li><i class="fas fa-check" style="color:#2196F3;"></i> 1x Dashcam AutoGuard 4K</li>
-                    <li><i class="fas fa-check" style="color:#2196F3;"></i> 1x Kamera Mundur</li>
-                    <li><i class="fas fa-check" style="color:#2196F3;"></i> Memory Card 64GB Gratis</li>
-                </ul>
-
-                <a href="#" class="btn btn-primary">AMBIL PROMO SEKARANG</a>
+                <div class="pain-card">
+                    <div class="pain-icon"><i class="fas fa-car-side"></i></div>
+                    <h4>Mobil Tergores di Parkiran</h4>
+                    <p class="text-grey">Sering nemu baret baru pas parkir di mall? Dengan fitur <em>Parking Monitor</em>, kamera otomatis rekam pelaku yang nyenggol mobil Anda.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon"><i class="fas fa-user-secret"></i></div>
+                    <h4>Tilang / Pungli Salah Sasaran</h4>
+                    <p class="text-grey">Dituduh melanggar padahal lampu hijau? Rekaman Dashcam adalah bukti hukum terkuat untuk membela diri.</p>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- DEMO VIDEO (NIGHT VISION) -->
+    <section id="demo" class="section-demo">
+        <div class="container reveal">
+            <h2 class="text-blue">Bukti Kualitas Video (Siang vs Malam)</h2>
+            <p class="text-grey">Sensor Sony menjamin plat nomor terbaca jelas meski minim cahaya.</p>
+            
+            <div class="video-compare">
+                <div class="video-box">
+                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop" alt="Rekaman Siang">
+                    <div class="video-label">☀️ DAY 4K (CLEAR)</div>
+                </div>
+                <div class="video-box">
+                    <img src="https://images.unsplash.com/photo-1516912826673-e4282dbb0d4d?q=80&w=2070&auto=format&fit=crop" alt="Rekaman Malam">
+                    <div class="video-label">🌙 NIGHT VISION (BRIGHT)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section-features">
+        <div class="container">
+            <div class="feature-row reveal">
+                <div style="flex:1;">
+                    <div class="feature-icon-box"><i class="fas fa-wifi"></i></div>
+                    <h3>Tarik Video Langsung ke HP</h3>
+                    <p class="text-grey">Gak perlu cabut memori colok ke laptop. AutoGuard punya WiFi sendiri. Tinggal buka Aplikasi, download video, langsung share ke WA/Medsos sebagai bukti.</p>
+                </div>
+                <div class="feature-img" style="flex:1;">
+                    <img src="https://images.unsplash.com/photo-1550029330-8dbccaade873?q=80&w=1998&auto=format&fit=crop" alt="App connect">
+                </div>
+            </div>
+
+            <div class="feature-row reveal">
+                <div style="flex:1;">
+                    <div class="feature-icon-box"><i class="fas fa-lock"></i></div>
+                    <h3>G-Sensor: Kunci Video Otomatis</h3>
+                    <p class="text-grey">Saat terjadi guncangan keras (tabrakan/rem mendadak), video detik tersebut akan otomatis terkunci dan tidak akan tertimpa (overwrite) oleh video baru. Bukti aman!</p>
+                </div>
+                <div class="feature-img" style="flex:1;">
+                    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=2070&auto=format&fit=crop" alt="Crash Detection">
+                </div>
+            </div>
+
+            <div class="feature-row reveal">
+                <div style="flex:1;">
+                    <div class="feature-icon-box"><i class="fas fa-infinity"></i></div>
+                    <h3>Loop Recording (Memori Gak Penuh)</h3>
+                    <p class="text-grey">Sistem rekam timpa otomatis. Jika memori penuh, video terlama akan dihapus terganti video baru (kecuali video yang dikunci G-Sensor). Jadi gak perlu repot format memori.</p>
+                </div>
+                <div class="feature-img" style="flex:1;">
+                    <img src="https://images.unsplash.com/photo-1531297461136-82lw22412034?q=80&w=2070&auto=format&fit=crop" alt="Memory Loop">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFER & PRICING -->
+    <section class="section-offer">
+        <div class="container">
+            <h2 class="mb-4 reveal">PAKET LENGKAP "SIAP REKAM"</h2>
+            <p class="text-grey mb-5 reveal">Gak perlu beli alat tambahan lagi. Tinggal colok, langsung aktif.</p>
+            
+            <div class="offer-card reveal">
+                <div class="ribbon">BEST VALUE</div>
+                <h3 class="text-blue">AUTOGUARD 4K BUNDLE</h3>
+                <p class="text-grey">Kamera Depan + Kamera Mundur + Memory 64GB</p>
+                
+                <div style="margin: 20px 0;">
+                    <span class="price-strike">Rp 1.850.000</span><br>
+                    <span class="price-final">Rp 899.000</span>
+                </div>
+
+                <p style="color: var(--primary-red); font-weight: bold; font-size: 0.9rem; margin-bottom: 5px;">
+                    ⚠️ Stok Promo Bundle Sisa 9 Unit!
+                </p>
+                <div class="stock-bar">
+                    <div class="stock-fill"></div>
+                </div>
+
+                <ul class="bundle-list">
+                    <li><i class="fas fa-check text-blue"></i> 1x Dashcam AutoGuard 4K (Depan)</li>
+                    <li><i class="fas fa-check text-blue"></i> 1x Kamera Belakang (Rear Cam) - Bisa buat parkir</li>
+                    <li><i class="fas fa-check text-blue"></i> 1x Charger Lighter + Kabel 3.5 Meter</li>
+                    <li><i class="fas fa-check text-blue"></i> <strong>GRATIS:</strong> MicroSD Class 10 64GB (High Speed)</li>
+                    <li><i class="fas fa-check text-blue"></i> <strong>GRATIS:</strong> Congkelan Kabel (Installation Tool)</li>
+                </ul>
+
+                <button onclick="redirectToWA('Saya mau Promo Bundle Dashcam 899rb')" class="btn btn-primary" style="width: 100%; font-size: 1.3rem;">
+                    AMBIL PROMO INI (COD)
+                </button>
+
+                <div class="logo-section">
+                    <p style="font-size: 0.8rem; color: #777; margin-bottom: 10px;">Pembayaran & Pengiriman Aman:</p>
+                    <div class="logo-wrapper">
+                        <div class="logo-badge">COD (BAYAR DITEMPAT)</div>
+                        <div class="logo-badge">BCA</div>
+                        <div class="logo-badge">MANDIRI</div>
+                        <div class="logo-badge">BRI</div>
+                        <div class="logo-badge">J&T</div>
+                        <div class="logo-badge">JNE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-faq">
+        <div class="container">
+            <h2 class="text-center mb-4 reveal">Pertanyaan Sering Diajukan (FAQ)</h2>
+
+            <button class="accordion reveal">Susah gak pasangnya?</button>
+            <div class="panel">
+                <p style="padding: 15px 0;">Gampang banget, Bos! Gak perlu potong kabel atau bongkar dashboard. Tinggal tempel di kaca, selipin kabel di plafon (ada alat congkelnya), terus colok ke pemantik rokok (lighter). Cuma 10-15 menit beres. Ada video tutorialnya juga.</p>
+            </div>
+
+            <button class="accordion reveal">Apakah bikin aki tekor?</button>
+            <div class="panel">
+                <p style="padding: 15px 0;">Tidak. Dashcam hanya nyala saat mesin mobil hidup. Saat mobil mati, dashcam ikut mati (kecuali pakai kabel *hardwire kit* khusus untuk mode parkir 24 jam).</p>
+            </div>
+
+            <button class="accordion reveal">Garansinya gimana?</button>
+            <div class="panel">
+                <p style="padding: 15px 0;">Garansi Resmi 1 Tahun Ganti Baru (bukan servis) jika ada kerusakan pabrik. Klaim mudah via WhatsApp kami.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background: #0b0f19; padding: 60px 20px 100px 20px; text-align: center; border-top: 1px solid #333;">
+        <h3 class="text-blue" style="font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; font-size: 2rem;">AUTOGUARD OFFICIAL</h3>
+        <p style="color: #666; font-size: 0.9rem;">Drive Safe, Drive Smart.</p>
+        <div style="margin: 20px 0;">
+            <i class="fab fa-instagram fa-lg" style="color: #fff; margin: 0 10px;"></i>
+            <i class="fab fa-tiktok fa-lg" style="color: #fff; margin: 0 10px;"></i>
+            <i class="fab fa-youtube fa-lg" style="color: #fff; margin: 0 10px;"></i>
+        </div>
+        <p style="color: #444; font-size: 0.8rem;">&copy; 2025 AutoGuard Indonesia. All Rights Reserved.</p>
+    </footer>
+
+    <!-- STICKY FOOTER -->
     <div class="sticky-footer">
-        <a href="#" class="btn btn-primary" style="width:100%;">AMBIL PROMO (Sisa 9 Unit)</a>
+        <button onclick="redirectToWA('Halo, mau tanya stok AutoGuard')" class="btn btn-primary" style="width: 100%; max-width: 500px;">
+            <i class="fab fa-whatsapp" style="margin-right: 10px;"></i> KONSULTASI & ORDER
+        </button>
     </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // 1. ACCORDION
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+
+        // 2. SCROLL ANIMATION
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+                if (revealtop < windowheight - revealpoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        reveal();
+
+        // 3. TIMER
+        let time = 6 * 60 * 60; 
+        setInterval(() => {
+            const h = Math.floor(time / 3600);
+            const m = Math.floor((time % 3600) / 60);
+            const s = time % 60;
+            document.getElementById('h').innerText = h < 10 ? '0'+h : h;
+            document.getElementById('m').innerText = m < 10 ? '0'+m : m;
+            document.getElementById('s').innerText = s < 10 ? '0'+s : s;
+            if(time > 0) time--;
+        }, 1000);
+
+        // 4. WA ROTATOR
+        function redirectToWA(customMessage) {
+            const admins = ["628562559129", "6281283436348"];
+            const randomAdmin = admins[Math.floor(Math.random() * admins.length)];
+            let message = customMessage ? customMessage : "Halo Admin AutoGuard, saya mau tanya dashcam.";
+            message += ". Apakah support untuk mobil saya?";
+            window.open(`https://wa.me/${randomAdmin}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
 
 </body>
 </html>
