@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoGuard 4K | Saksi Mata Digital Mobil Anda</title>
+    <meta name="description" content="Dashcam mobil resolusi 4K dengan Night Vision. Rekam bukti kecelakaan dan anti-modus di jalan. Pasang mudah, koneksi WiFi ke HP.">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-red: #D32F2F;
+            --tech-blue: #2196F3;
+            --dark-bg: #0F172A;
+            --card-bg: #1E293B;
+            --text-white: #F1F5F9;
+            --text-grey: #94A3B8;
+            --accent-yellow: #FFC107;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            background: var(--dark-bg);
+            color: var(--text-white);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h1,h2,h3,h4 {
+            font-family:'Rajdhani',sans-serif;
+            text-transform:uppercase;
+        }
+
+        .container {
+            max-width:1100px;
+            margin:auto;
+            padding:0 20px;
+        }
+
+        /* FIXED SPACING REQUEST */
+        .section-offer .mb-space {
+            margin-bottom: 40px !important;
+        }
+
+        header {
+            padding:80px 0 120px;
+            background:linear-gradient(180deg,rgba(15,23,42,0.8),var(--dark-bg)), 
+            url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2000&auto=format&fit=crop');
+            background-size:cover;
+            background-position:center;
+        }
+
+        .hero-content { text-align:center; max-width:800px; margin:auto; }
+
+        .btn {
+            display:inline-block;
+            padding:15px 35px;
+            border-radius:6px;
+            cursor:pointer;
+            font-weight:bold;
+            text-transform:uppercase;
+            text-decoration:none;
+        }
+
+        .btn-primary { background:var(--primary-red); color:white; }
+        .btn-outline { border:2px solid white; color:white; }
+
+        .section-offer {
+            padding:80px 0;
+            text-align:center;
+            background:linear-gradient(45deg,#0f172a,#1e293b);
+        }
+
+        .offer-card {
+            border:2px solid var(--tech-blue);
+            border-radius:20px;
+            padding:50px;
+            max-width:700px;
+            margin:auto;
+            background:rgba(255,255,255,0.05);
+            backdrop-filter:blur(10px);
+        }
+
+        .bundle-list { list-style:none; text-align:left; max-width:450px; margin:20px auto; }
+        .bundle-list li { padding:10px 0; border-bottom:1px dashed #444; display:flex; gap:10px; align-items:center; }
+
+        .sticky-footer {
+            position:fixed;
+            bottom:0;
+            left:0;
+            width:100%;
+            background:rgba(15,23,42,0.95);
+            padding:15px;
+            text-align:center;
+            border-top:1px solid var(--tech-blue);
+            backdrop-filter:blur(10px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Jangan Biarkan Tabrak Lari <br><span style="color:#D32F2F;">Tanpa Bukti Video!</span></h1>
+                <p>Kamera mobil 4K dengan sensor Sony Starvis.</p>
+
+                <a href="#" class="btn btn-primary">AMBIL PROMO</a>
+                <a href="#" class="btn btn-outline">Lihat Video</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- OFFER FIXED SPACING -->
+    <section class="section-offer">
+        <div class="container">
+            <h2>PAKET LENGKAP "SIAP REKAM"</h2>
+            <p class="text-grey mb-space">Gak perlu beli alat tambahan lagi. Tinggal colok, langsung aktif.</p>
+
+            <div class="offer-card">
+                <h3 style="color:#2196F3;">AUTOGUARD 4K BUNDLE</h3>
+
+                <p class="text-grey">Kamera Depan + Kamera Belakang + Memory 64GB</p>
+
+                <div style="margin:20px 0;">
+                    <span style="text-decoration:line-through; color:#94A3B8;">Rp 1.850.000</span><br>
+                    <span style="font-size:3rem; font-weight:800;">Rp 899.000</span>
+                </div>
+
+                <ul class="bundle-list">
+                    <li><i class="fas fa-check" style="color:#2196F3;"></i> 1x Dashcam AutoGuard 4K</li>
+                    <li><i class="fas fa-check" style="color:#2196F3;"></i> 1x Kamera Mundur</li>
+                    <li><i class="fas fa-check" style="color:#2196F3;"></i> Memory Card 64GB Gratis</li>
+                </ul>
+
+                <a href="#" class="btn btn-primary">AMBIL PROMO SEKARANG</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="sticky-footer">
+        <a href="#" class="btn btn-primary" style="width:100%;">AMBIL PROMO (Sisa 9 Unit)</a>
+    </div>
+
+</body>
+</html>
